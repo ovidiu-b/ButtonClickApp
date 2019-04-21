@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
+private const val TEXT_CONTENT = "TextContent"
+
 class MainActivity : AppCompatActivity() {
     private var textView: TextView? = null
 
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val button: Button = findViewById(R.id.button)
         textView = findViewById(R.id.textView)
 
-        textView?.text = ""
+        textView?.text = savedInstanceState?.getString(TEXT_CONTENT, "") ?: ""
         textView?.movementMethod = ScrollingMovementMethod()
 
         button.setOnClickListener {
@@ -27,5 +29,11 @@ class MainActivity : AppCompatActivity() {
 
             userInput.text.clear()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+
+        outState?.putString(TEXT_CONTENT, textView?.text.toString())
     }
 }
